@@ -127,7 +127,7 @@ void App::OnActivated(CoreApplicationView^ applicationView, IActivatedEventArgs^
 	// Run() won't start until the CoreWindow is activated.
 	CoreWindow::GetForCurrentThread()->Activate();
 
-	// jedb:
+	// jedb: where's the right place for this?
 	ApplicationView^ view = ApplicationView::GetForCurrentView();
 	if (view->IsFullScreenMode)
 	{
