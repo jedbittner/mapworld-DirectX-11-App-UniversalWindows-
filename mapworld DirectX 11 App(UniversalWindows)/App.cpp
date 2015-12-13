@@ -14,7 +14,7 @@ using namespace Windows::UI::Input;
 using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
-using namespace Windows::UI::ViewManagement;	// jedb
+using namespace Windows::UI::ViewManagement;	// jedb: for calling TryEnterFullScreenMode()
 
 // The main function is only used to initialize our IFrameworkView class.
 [Platform::MTAThread]

@@ -19,6 +19,8 @@ mapworld_DirectX_11_App_UniversalWindows_Main::mapworld_DirectX_11_App_Universal
 
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
+	m_mapRenderer = std::unique_ptr<MapRenderer>(new MapRenderer(m_deviceResources));
+
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*
@@ -49,6 +51,7 @@ void mapworld_DirectX_11_App_UniversalWindows_Main::Update()
 		// TODO: Replace this with your app's content update functions.
 		m_sceneRenderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
+		m_mapRenderer->Update();
 	});
 }
 
@@ -80,6 +83,7 @@ bool mapworld_DirectX_11_App_UniversalWindows_Main::Render()
 	// TODO: Replace this with your app's content rendering functions.
 	m_sceneRenderer->Render();
 	m_fpsTextRenderer->Render();
+	m_mapRenderer->Render();
 
 	return true;
 }
