@@ -14,17 +14,7 @@ void MoveLookController::OnKeyDown(
 	Windows::System::VirtualKey Key;
 	Key = args->VirtualKey;
 
-	m_anyKey = true;	// will this trigger on any keypress?
-
-	// Figure out the command from the keyboard.
-	if (Key == VirtualKey::W)     // Forward
-		m_forward = true;
-	if (Key == VirtualKey::S)     // Back
-		m_back = true;
-	if (Key == VirtualKey::A)     // Left
-		m_left = true;
-	if (Key == VirtualKey::D)     // Right
-		m_right = true;
+	m_anyKey = true;	// trigger on any keypress
 }
 
 void MoveLookController::OnKeyUp(
@@ -34,17 +24,7 @@ void MoveLookController::OnKeyUp(
 	Windows::System::VirtualKey Key;
 	Key = args->VirtualKey;
 
-	m_anyKey = false;	// will this trigger on any keypress?
-
-						// Figure out the command from the keyboard.
-	if (Key == VirtualKey::W)     // forward
-		m_forward = false;
-	if (Key == VirtualKey::S)     // back
-		m_back = false;
-	if (Key == VirtualKey::A)     // left
-		m_left = false;
-	if (Key == VirtualKey::D)     // right
-		m_right = false;
+	m_anyKey = false;
 }
 
 void MoveLookController::Initialize(_In_ CoreWindow^ window)
@@ -62,28 +42,9 @@ void MoveLookController::Initialize(_In_ CoreWindow^ window)
 bool MoveLookController::Update(CoreWindow ^window)
 {
 	// Poll our state bits that are set by the keyboard input events.
-	if (m_forward)
-	{
-		return true;
-	}
-
 	if (m_anyKey)
 	{
 		return true;
 	}
-
-	//////if (m_back)
-	//////	m_moveCommand.y -= 1.0f;
-
-	//////if (m_left)
-	//////	m_moveCommand.x -= 1.0f;
-	//////if (m_right)
-	//////	m_moveCommand.x += 1.0f;
-
-	//////if (m_up)
-	//////	m_moveCommand.z += 1.0f;
-	//////if (m_down)
-	//////	m_moveCommand.z -= 1.0f;
-	
 	return false;
 }

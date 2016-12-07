@@ -11,9 +11,6 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 	ref class MoveLookController sealed
 	{
 	private:
-		bool m_forward, m_back;         // States for movement
-		bool m_left, m_right;
-		bool m_up, m_down;
 		bool m_anyKey;
 
 	public:
