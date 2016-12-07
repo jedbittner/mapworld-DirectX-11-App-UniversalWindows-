@@ -210,5 +210,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# Visual Studio 2015 - added jedb
 *.VC.db
 *.opendb
+mapworld DirectX 11 App(UniversalWindows).VC.db
