@@ -70,6 +70,12 @@
     <ClCompile Include="Content\MapRenderer.cpp">
       <Filter>Content</Filter>
     </ClCompile>
+    <ClCompile Include="Content\MoveLookController.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\StuffRenderer.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -77,6 +83,15 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Content\MapRenderer.h">
       <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\MoveLookController.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\StuffRenderer.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\utility.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

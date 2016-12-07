@@ -5,6 +5,8 @@
 #include "Content\Sample3DSceneRenderer.h"
 #include "Content\SampleFpsTextRenderer.h"
 #include "Content\MapRenderer.h"
+#include "Content\StuffRenderer.h"
+#include "Content\MoveLookController.h"
 
 // Renders Direct2D and 3D content on the screen.
 namespace mapworld_DirectX_11_App_UniversalWindows_
@@ -30,8 +32,10 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		std::unique_ptr<Sample3DSceneRenderer> m_sceneRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 		std::unique_ptr<MapRenderer> m_mapRenderer;
+		std::unique_ptr<StuffRenderer> m_stuffRenderer;
+		MoveLookController^ m_moveLookController;
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
-	};
+ 	};
 }

@@ -21,6 +21,12 @@ mapworld_DirectX_11_App_UniversalWindows_Main::mapworld_DirectX_11_App_Universal
 
 	m_mapRenderer = std::unique_ptr<MapRenderer>(new MapRenderer(m_deviceResources));
 
+	m_stuffRenderer = std::unique_ptr<StuffRenderer>(new StuffRenderer(m_deviceResources));
+
+	m_moveLookController = ref new MoveLookController();
+	m_moveLookController->Initialize(CoreWindow::GetForCurrentThread());
+	
+
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*
@@ -52,7 +58,14 @@ void mapworld_DirectX_11_App_UniversalWindows_Main::Update()
 		m_sceneRenderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
 		m_mapRenderer->Update();
+		m_stuffRenderer->Update();
 	});
+	
+	bool retVal = m_moveLookController->Update(CoreWindow::GetForCurrentThread());
+	if (retVal)
+	{
+		m_stuffRenderer->ChangeState();
+	}
 }
 
 // Renders the current frame according to the current application state.
@@ -81,9 +94,10 @@ bool mapworld_DirectX_11_App_UniversalWindows_Main::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
+	m_mapRenderer->Render();
 	m_sceneRenderer->Render();
 	m_fpsTextRenderer->Render();
-	m_mapRenderer->Render();
+	m_stuffRenderer->Render();
 
 	return true;
 }
@@ -93,6 +107,8 @@ void mapworld_DirectX_11_App_UniversalWindows_Main::OnDeviceLost()
 {
 	m_sceneRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
+	m_mapRenderer->ReleaseDeviceDependentResources();
+	m_stuffRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
@@ -100,5 +116,7 @@ void mapworld_DirectX_11_App_UniversalWindows_Main::OnDeviceRestored()
 {
 	m_sceneRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
+	m_mapRenderer->CreateDeviceDependentResources();
+	m_stuffRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }
