@@ -128,21 +128,21 @@ void App::OnActivated(CoreApplicationView^ applicationView, IActivatedEventArgs^
 	CoreWindow::GetForCurrentThread()->Activate();
 
 	// jedb: where's the right place for this?
-	ApplicationView^ view = ApplicationView::GetForCurrentView();
-	if (view->IsFullScreenMode)
-	{
-	}
-	else
-	{
-		if (view->TryEnterFullScreenMode())
-		{
-			int a = 0;
-		}
-		else
-		{
-			int b = 0;
-		}
-	}
+	//////ApplicationView^ view = ApplicationView::GetForCurrentView();
+	//////if (view->IsFullScreenMode)
+	//////{
+	//////}
+	//////else
+	//////{
+	//////	if (view->TryEnterFullScreenMode())
+	//////	{
+	//////		int a = 0;
+	//////	}
+	//////	else
+	//////	{
+	//////		int b = 0;
+	//////	}
+	//////}
 
 }
 

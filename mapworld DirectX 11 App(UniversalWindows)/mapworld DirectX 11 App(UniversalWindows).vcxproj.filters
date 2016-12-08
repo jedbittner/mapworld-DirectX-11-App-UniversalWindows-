@@ -23,27 +23,12 @@
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClInclude Include="Content\Sample3DSceneRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Content\SampleFpsTextRenderer.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Content\ShaderStructures.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
       <Filter>Content</Filter>
     </ClCompile>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
@@ -67,9 +52,6 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="mapworld_DirectX_11_App_UniversalWindows_Main.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Content\MapRenderer.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
     <ClCompile Include="Content\MoveLookController.cpp">
       <Filter>Content</Filter>
     </ClCompile>
@@ -81,9 +63,6 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="mapworld_DirectX_11_App_UniversalWindows_Main.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Content\MapRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Content\MoveLookController.h">
       <Filter>Content</Filter>
     </ClInclude>

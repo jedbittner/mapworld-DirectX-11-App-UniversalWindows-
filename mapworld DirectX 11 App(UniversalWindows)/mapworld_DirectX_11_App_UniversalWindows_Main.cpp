@@ -15,14 +15,8 @@ mapworld_DirectX_11_App_UniversalWindows_Main::mapworld_DirectX_11_App_Universal
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	// TODO: Replace this with your app's content initialization.
-	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
-
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
-
-	m_mapRenderer = std::unique_ptr<MapRenderer>(new MapRenderer(m_deviceResources));
-
 	m_stuffRenderer = std::unique_ptr<StuffRenderer>(new StuffRenderer(m_deviceResources));
-
 	m_moveLookController = ref new MoveLookController();
 	m_moveLookController->Initialize(CoreWindow::GetForCurrentThread());
 	
@@ -45,7 +39,6 @@ mapworld_DirectX_11_App_UniversalWindows_Main::~mapworld_DirectX_11_App_Universa
 void mapworld_DirectX_11_App_UniversalWindows_Main::CreateWindowSizeDependentResources() 
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
-	m_sceneRenderer->CreateWindowSizeDependentResources();
 }
 
 // Updates the application state once per frame.
@@ -55,9 +48,7 @@ void mapworld_DirectX_11_App_UniversalWindows_Main::Update()
 	m_timer.Tick([&]()
 	{
 		// TODO: Replace this with your app's content update functions.
-		m_sceneRenderer->Update(m_timer);
 		m_fpsTextRenderer->Update(m_timer);
-		m_mapRenderer->Update();
 		m_stuffRenderer->Update();
 	});
 	
@@ -94,8 +85,6 @@ bool mapworld_DirectX_11_App_UniversalWindows_Main::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	m_mapRenderer->Render();
-	m_sceneRenderer->Render();
 	m_fpsTextRenderer->Render();
 	m_stuffRenderer->Render();
 
@@ -105,18 +94,14 @@ bool mapworld_DirectX_11_App_UniversalWindows_Main::Render()
 // Notifies renderers that device resources need to be released.
 void mapworld_DirectX_11_App_UniversalWindows_Main::OnDeviceLost()
 {
-	m_sceneRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
-	m_mapRenderer->ReleaseDeviceDependentResources();
 	m_stuffRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
 void mapworld_DirectX_11_App_UniversalWindows_Main::OnDeviceRestored()
 {
-	m_sceneRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
-	m_mapRenderer->CreateDeviceDependentResources();
 	m_stuffRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }
