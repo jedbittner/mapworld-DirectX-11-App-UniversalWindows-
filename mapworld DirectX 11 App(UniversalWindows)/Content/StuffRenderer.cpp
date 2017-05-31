@@ -73,36 +73,11 @@ void StuffRenderer::Render()
 	context->BeginDraw();
 
 	D2D1_SIZE_F rtSize = context->GetSize();
-
-	if (false)  // temporarily turn off
-	{
-		// draw bouncing box
-		float x = rtSize.width / 20.0f;
-		float y = rtSize.height / 20.0f;
-		float xOffset = rand() % 32;
-		float yOffset = rand() % 32;
-		DrawTile(x + xOffset, y + yOffset, rtSize.height / 2, 128, 128, 0);
-
-		// draw random dot
-		x = rtSize.width - rtSize.width / 20.0f;
-		y = rtSize.height / 20.0f;
-		xOffset = rand() % 10;
-		yOffset = rand() % 10;
-		DrawDot(x + xOffset, y + yOffset, 128, 128, 0);
-
-		// draw twice for different effect:
-		for (int i = 0; i < 2; i++)
-		{
-			// draw random dot, larger
-			x = rtSize.width - rtSize.width / 20.0f;
-			y = rtSize.height / 20.0f * 2;
-			xOffset = rand() % 10;
-			yOffset = rand() % 10;
-			DrawTile(x + xOffset, y + yOffset, 10, 128, 128, 0);
-		}
-	}
-
+	
 	// domino code...
+	m_dominoLocationX = (rtSize.width /2) - (m_spaceBetweenDominoHalves / 2) - (m_dominoDotSize*7 /2);
+	m_dominoLocationY = m_spaceBetweenDominos;
+
 	int y = 0;
 	while (m_it != m_dominoHalves.end())
 	{

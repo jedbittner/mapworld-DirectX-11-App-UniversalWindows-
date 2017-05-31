@@ -18,8 +18,11 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		enum eState {getDominos, displayDominos};
+		// state machine
+		enum eState {getDominos, displayDominos, displayAnswer};
 		eState m_state = getDominos;
+		
+		// domino stuff
 		std::vector<int>			m_dominoHalves;  // halves are sequential
 		std::vector<int>::iterator	m_it;
 		int m_maxNumberOfDominos = 8;

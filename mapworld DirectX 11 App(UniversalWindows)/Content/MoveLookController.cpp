@@ -14,7 +14,7 @@ void MoveLookController::OnKeyDown(
 	Windows::System::VirtualKey Key;
 	Key = args->VirtualKey;
 
-	m_anyKey = true;	// trigger on any keypress
+//	m_anyKey = true;	// trigger on any keypress
 }
 
 void MoveLookController::OnKeyUp(
@@ -24,7 +24,7 @@ void MoveLookController::OnKeyUp(
 	Windows::System::VirtualKey Key;
 	Key = args->VirtualKey;
 
-	m_anyKey = false;
+	m_anyKey = true;
 }
 
 void MoveLookController::Initialize(_In_ CoreWindow^ window)
@@ -44,6 +44,7 @@ bool MoveLookController::Update(CoreWindow ^window)
 	// Poll our state bits that are set by the keyboard input events.
 	if (m_anyKey)
 	{
+		m_anyKey = false;
 		return true;
 	}
 	return false;
