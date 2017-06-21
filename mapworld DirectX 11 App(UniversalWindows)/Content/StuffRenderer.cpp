@@ -10,16 +10,39 @@ using namespace DirectX;
 using namespace Windows::Foundation;
 
 StuffRenderer::StuffRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
+	m_text(L""),
 	m_deviceResources(deviceResources)
 {
+	ZeroMemory(&m_textMetrics, sizeof(DWRITE_TEXT_METRICS));
+
+	// Create device independent resources
+	DX::ThrowIfFailed(
+		m_deviceResources->GetDWriteFactory()->CreateTextFormat(
+			L"Segoe UI",
+			nullptr,
+			DWRITE_FONT_WEIGHT_LIGHT,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			32.0f,
+			L"en-US",
+			&m_textFormat
+		)
+	);
+
+	DX::ThrowIfFailed(
+		m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR)
+	);
+
 	DX::ThrowIfFailed(
 		m_deviceResources->GetD2DFactory()->CreateDrawingStateBlock(&m_stateBlock)
 		);
 	CreateDeviceDependentResources();
+
 	// seed random number generator
 	time_t Time;
 	time(&Time);
 	srand(Time);
+
 	// initialize variables
 	m_dominoHalves.clear();
 }
@@ -46,13 +69,31 @@ void StuffRenderer::Update()
 		}
 		m_it = m_dominoHalves.begin();			// reset iterator
 		// temp until displayed on screen
-		//////TCHAR buff[256];
-		//////swprintf(buff, 256, L"%d for %d\n", m_totalDominoValues, (int)m_totalDominoValues / 5);
-		//////OutputDebugString(buff);
 		Trace(L"%d for %d\n", m_totalDominoValues, (int)round((float)(m_totalDominoValues) / 5));
 		// end temp
+		swprintf(m_Answer, 256, L"%d for %d\n", m_totalDominoValues, (int)round((float)(m_totalDominoValues) / 5));
+		OutputDebugString(m_Answer);
+		m_text = L"";
 		m_state = displayDominos;
 	}
+		break;
+	case displayAnswer:
+		// Update display text.
+		m_text = m_Answer;
+		DX::ThrowIfFailed(
+			m_deviceResources->GetDWriteFactory()->CreateTextLayout(
+				m_text.c_str(),
+				(uint32)m_text.length(),
+				m_textFormat.Get(),
+				240.0f, // Max width of the input text.
+				50.0f, // Max height of the input text.
+				&m_textLayout
+			)
+		);
+
+		DX::ThrowIfFailed(
+			m_textLayout->GetMetrics(&m_textMetrics)
+		);
 		break;
 	case displayDominos:
 		break;
@@ -61,7 +102,10 @@ void StuffRenderer::Update()
 
 void StuffRenderer::ChangeState()
 {
-	m_state = getDominos;
+	if (m_state == displayDominos)
+		m_state = displayAnswer;
+	else
+		m_state = getDominos;
 }
 
 void StuffRenderer::Render()
@@ -94,6 +138,27 @@ void StuffRenderer::Render()
 	}
 	m_it = m_dominoHalves.begin();	// reset iterator to beginning for next time through
 
+	// Position answer on the bottom
+	if (m_text.compare(L"") != 0)
+	{
+		D2D1::Matrix3x2F screenTranslation = D2D1::Matrix3x2F::Translation(
+			logicalSize.Width - m_textMetrics.layoutWidth,
+			logicalSize.Height - m_textMetrics.height
+		);
+
+		context->SetTransform(screenTranslation * m_deviceResources->GetOrientationTransform2D());
+
+		DX::ThrowIfFailed(
+			m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING)
+		);
+
+		context->DrawTextLayout(
+			D2D1::Point2F(0.f, 0.f),
+			m_textLayout.Get(),
+			m_whiteBrush.Get()
+		);
+	}
+
 	// Ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
 	// is lost. It will be handled during the next call to Present.
 	HRESULT hr = context->EndDraw();
@@ -110,10 +175,14 @@ void StuffRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		m_deviceResources->GetD2DDeviceContext()->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &m_solidColorBrush)
 		);
+	DX::ThrowIfFailed(
+		m_deviceResources->GetD2DDeviceContext()->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &m_whiteBrush)
+	);
 }
 void StuffRenderer::ReleaseDeviceDependentResources()
 {
 	m_solidColorBrush.Reset();
+	m_whiteBrush.Reset();
 }
 
 void StuffRenderer::DrawTile(FLOAT x, FLOAT y, FLOAT side, FLOAT r, FLOAT g, FLOAT b)

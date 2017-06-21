@@ -22,6 +22,14 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		enum eState {getDominos, displayDominos, displayAnswer};
 		eState m_state = getDominos;
 		
+		// Resources related to text rendering.
+		std::wstring                                    m_text;
+		DWRITE_TEXT_METRICS	                            m_textMetrics;
+		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>    m_whiteBrush;
+		Microsoft::WRL::ComPtr<ID2D1DrawingStateBlock>  m_stateBlock;
+		Microsoft::WRL::ComPtr<IDWriteTextLayout>       m_textLayout;
+		Microsoft::WRL::ComPtr<IDWriteTextFormat>		m_textFormat;
+
 		// domino stuff
 		std::vector<int>			m_dominoHalves;  // halves are sequential
 		std::vector<int>::iterator	m_it;
@@ -29,6 +37,9 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		int m_maxNumberOfDominoHalves = m_maxNumberOfDominos * 2;
 		int m_numDoms = 0;				// random number of dominos, set for each turn
 		int m_totalDominoValues = 0;
+		TCHAR m_Answer[256];
+		TCHAR m_DisplayAnswer[256];
+
 
 		float m_dominoLocationX = 150;
 		float m_dominoLocationY = 120;
@@ -37,7 +48,6 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		int m_dominoDotSize = 8;
 		int m_distanceBetweenDots = 8;
 
-		Microsoft::WRL::ComPtr<ID2D1DrawingStateBlock>  m_stateBlock;
 		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>    m_solidColorBrush;
 
 		void StuffRenderer::DrawTile(FLOAT x, FLOAT y, FLOAT side, FLOAT r, FLOAT g, FLOAT b);
