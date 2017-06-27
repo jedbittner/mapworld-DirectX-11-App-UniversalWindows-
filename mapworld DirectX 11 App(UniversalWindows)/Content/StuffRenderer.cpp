@@ -139,7 +139,7 @@ void StuffRenderer::Render()
 	m_it = m_dominoHalves.begin();	// reset iterator to beginning for next time through
 
 	// Position answer on the bottom
-	if (m_text.compare(L"") != 0)
+	if (m_text.compare(L"") != 0)	// skip if text is blank
 	{
 		D2D1::Matrix3x2F screenTranslation = D2D1::Matrix3x2F::Translation(
 			logicalSize.Width - m_textMetrics.layoutWidth,

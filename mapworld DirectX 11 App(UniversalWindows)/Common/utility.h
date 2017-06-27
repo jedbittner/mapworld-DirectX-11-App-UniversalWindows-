@@ -52,7 +52,7 @@ inline void _cdecl Trace(LPCWSTR formatString, ...)
 #include <time.h>
 
 #define ASSERT( exp, desc){}
-inline void _cdecl Trace(LPCSTR , ...){}
+inline void _cdecl Trace(LPCTSTR, ...){}
 
 #endif //_DEBUG
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="c608e987-db92-48fc-9a38-449874226028" Publisher="CN=bluerust software" Version="1.0.2.0" />
+  <Identity Name="c608e987-db92-48fc-9a38-449874226028" Publisher="CN=bluerust software" Version="1.0.7.0" />
   <mp:PhoneIdentity PhoneProductId="c608e987-db92-48fc-9a38-449874226028" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>domino counter</DisplayName>

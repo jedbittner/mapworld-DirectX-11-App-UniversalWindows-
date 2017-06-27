@@ -103,10 +103,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>mapworld DirectX 11 App(UniversalWindows)_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>D4B5D37A0D053099435E4F895C54A892F4C1018F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A808D0D92B1D442690DB1BEF1797B2F11B3F6F38</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
