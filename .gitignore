@@ -173,6 +173,7 @@ ipch/
 *.cachefile
 
 *.VC.db
+'mapworld DirectX 11 App(UniversalWindows).VC.db'
 
 *.VC.VC.opendb
 
