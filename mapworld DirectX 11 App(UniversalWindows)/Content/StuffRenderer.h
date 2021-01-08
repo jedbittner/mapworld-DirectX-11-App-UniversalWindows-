@@ -2,6 +2,7 @@
 
 #include "..\Common\DeviceResources.h"
 #include <vector>
+using namespace std;
 
 namespace mapworld_DirectX_11_App_UniversalWindows_
 {
@@ -31,15 +32,21 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		Microsoft::WRL::ComPtr<IDWriteTextFormat>		m_textFormat;
 
 		// domino stuff
-		std::vector<int>			m_dominoHalves;  // halves are sequential
-		std::vector<int>::iterator	m_it;
 		int m_maxNumberOfDominos = 8;
-		int m_maxNumberOfDominoHalves = m_maxNumberOfDominos * 2;
-		int m_numDoms = 0;				// random number of dominos, set for each turn
 		int m_totalDominoValues = 0;
 		TCHAR m_Answer[256];
 		TCHAR m_DisplayAnswer[256];
 
+		// <<<jedb>>> 09/09/2020 start
+		struct domino {
+			int lefthalf;
+			int righthalf;
+		};
+		vector<domino> m_doms;
+		vector<domino>::iterator m_iter;
+		int m_numberOfDominos;
+		int m_numDomsDisplayed;
+		// <<<jedb>>> 09/09/2020 end
 
 		float m_dominoLocationX = 150;
 		float m_dominoLocationY = 120;
@@ -47,6 +54,8 @@ namespace mapworld_DirectX_11_App_UniversalWindows_
 		float m_spaceBetweenDominoHalves = 60;
 		int m_dominoDotSize = 8;
 		int m_distanceBetweenDots = 8;
+
+		void StuffRenderer::ShuffleDominos();
 
 		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>    m_solidColorBrush;
 

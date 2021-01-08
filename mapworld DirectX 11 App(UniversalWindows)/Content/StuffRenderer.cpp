@@ -41,10 +41,23 @@ StuffRenderer::StuffRenderer(const std::shared_ptr<DX::DeviceResources>& deviceR
 	// seed random number generator
 	time_t Time;
 	time(&Time);
-	srand(Time);
+	srand((unsigned int)Time);
 
 	// initialize variables
-	m_dominoHalves.clear();
+	
+	// <<<jedb>>> 09/09/2020 start
+	int dominoOffset = 0;
+	for (int i = 0; i < 7; i++)	{		// right
+		for (int j = i; j < 7; j++) {	// left
+			m_doms.push_back(domino());
+			m_doms[dominoOffset].lefthalf = j;
+			m_doms[dominoOffset].righthalf = i;
+			dominoOffset++;
+		}
+	}
+	m_numberOfDominos = m_doms.size();
+	// <<<jedb>>> 09/09/2020 end
+
 }
 
 void StuffRenderer::Update()
@@ -58,21 +71,13 @@ void StuffRenderer::Update()
 	case getDominos:
 	{
 		m_totalDominoValues = 0;
-		m_dominoHalves.clear();					// empty all contents
-		int numberOfDominos = (rand() % m_maxNumberOfDominos) + 1;
-		int numberOfDominoHalves = numberOfDominos * 2;
-		for (int i = 0; i < (numberOfDominoHalves); i++)
+		m_numDomsDisplayed = (rand() % m_maxNumberOfDominos) + 1;
+		ShuffleDominos();
+		for (int i = 0; i < m_numDomsDisplayed; i++)
 		{
-			int value = rand() % 7;
-			m_dominoHalves.push_back(value);
-			m_totalDominoValues += value;
+			m_totalDominoValues += m_doms[i].lefthalf + m_doms[i].righthalf;
 		}
-		m_it = m_dominoHalves.begin();			// reset iterator
-		// temp until displayed on screen
-		Trace(L"%d for %d\n", m_totalDominoValues, (int)round((float)(m_totalDominoValues) / 5));
-		// end temp
 		swprintf(m_Answer, 256, L"%d for %d\n", m_totalDominoValues, (int)round((float)(m_totalDominoValues) / 5));
-		OutputDebugString(m_Answer);
 		m_text = L"";
 		m_state = displayDominos;
 	}
@@ -119,25 +124,17 @@ void StuffRenderer::Render()
 	D2D1_SIZE_F rtSize = context->GetSize();
 	
 	// domino code...
-	m_dominoLocationX = (rtSize.width /2) - (m_spaceBetweenDominoHalves / 2) - (m_dominoDotSize*7 /2);
+	m_dominoLocationX = (rtSize.width / 2) - (m_spaceBetweenDominoHalves / 2) - (m_dominoDotSize * 7 / 2);
 	m_dominoLocationY = m_spaceBetweenDominos;
 
 	int y = 0;
-	while (m_it != m_dominoHalves.end())
+	for (int i = 0; i < m_numDomsDisplayed; i++)
 	{
-		int leftSide = *m_it;
-		++m_it;
-		int rightSide = *m_it;
-		++m_it;
-		for (int x = 0; x < 2; x++)
-		{
-			DrawDominoHalf(leftSide, m_dominoLocationX, m_dominoLocationY + (y * m_spaceBetweenDominos), 0, 0, 0);
-			DrawDominoHalf(rightSide, m_dominoLocationX + m_spaceBetweenDominoHalves, m_dominoLocationY + (y * m_spaceBetweenDominos), 0, 0, 0);
-		}
+		DrawDominoHalf(m_doms[i].lefthalf, m_dominoLocationX, m_dominoLocationY + (y * m_spaceBetweenDominos), 0, 0, 0);
+		DrawDominoHalf(m_doms[i].righthalf, m_dominoLocationX + m_spaceBetweenDominoHalves, m_dominoLocationY + (y * m_spaceBetweenDominos), 0, 0, 0);
 		y++;
 	}
-	m_it = m_dominoHalves.begin();	// reset iterator to beginning for next time through
-
+									
 	// Position answer on the bottom
 	if (m_text.compare(L"") != 0)	// skip if text is blank
 	{
@@ -183,6 +180,30 @@ void StuffRenderer::ReleaseDeviceDependentResources()
 {
 	m_solidColorBrush.Reset();
 	m_whiteBrush.Reset();
+}
+
+void StuffRenderer::ShuffleDominos()
+{
+	int n = m_doms.size();
+	int index_arr[256];	// max 28 dominos
+	vector<domino> shuffled = m_doms;
+	int index;
+	for (int i = 0; i < n; i++)
+		index_arr[i] = 0;
+	for (int i = 0; i < n; i++) {
+		do {
+			index = rand() % n;
+		} while (index_arr[index] != 0);
+		index_arr[index] = 1;
+		shuffled[i] = m_doms[index];
+		// psuedo-random swap left and right domino sides (for display, not part of Fisher-Yates shuffle)
+		if (index % 3) {
+			int temp = shuffled[i].lefthalf;
+			shuffled[i].lefthalf = shuffled[i].righthalf;
+			shuffled[i].righthalf = temp;
+		}
+	}
+	m_doms = shuffled;
 }
 
 void StuffRenderer::DrawTile(FLOAT x, FLOAT y, FLOAT side, FLOAT r, FLOAT g, FLOAT b)
