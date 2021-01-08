@@ -490,6 +490,7 @@ FakesAssemblies/
 
 *.opt
 
+<<<<<<< HEAD
 
 
 # Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
@@ -555,3 +556,13 @@ __pycache__/
 # tools/
 mapworld DirectX 11 App(UniversalWindows).VC.db
 mapworld DirectX 11 App(UniversalWindows).VC.db
+=======
+# LightSwitch generated files
+GeneratedArtifacts/
+_Pvt_Extensions/
+ModelManifest.xml
+
+# Visual Studio 2015 - jedb
+*VC.db
+*.opendb
+>>>>>>> refs/remotes/origin/master
